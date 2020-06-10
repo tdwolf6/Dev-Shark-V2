@@ -46,44 +46,42 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Login = () => {
+const Login = (props) => {
   const classes = useStyles();
   const [loginOpen, setLoginOpen] = useState(false);
-  const [loginUsername, setLoginUsername] = useState('');
+  const [loginEmail, setLoginEmail] = useState('');
   const [loginPassword, setLoginPassword] = useState('');
   const [signupOpen, setSignupOpen] = useState(false);
-  const [signupUsername, setSignupUsername] = useState('');
+  const [signupEmail, setSignupEmail] = useState('');
   const [signupPassword, setSignupPassword] = useState('');
 
   const toggleLogin = (e) => {
-    if (loginOpen === false){
+    if (loginOpen === false) {
       setSignupOpen(false);
     }
     setLoginOpen(loginOpen ? false : true);
-     clearForm();
+    clearForm();
   };
 
-const toggleSignup = (e) => {
-  if (signupOpen === false){
-    setLoginOpen(false);
-  }
+  const toggleSignup = (e) => {
+    if (signupOpen === false) {
+      setLoginOpen(false);
+    }
     setSignupOpen(signupOpen ? false : true);
-
     clearForm();
-
-}
+  }
 
   const handleChange = (e) => {
     let inputVal = e.target.value;
     switch (e.target.name) {
       case 'loginUser':
-        setLoginUsername(inputVal);
+        setLoginEmail(inputVal);
         break;
       case 'loginPassword':
         setLoginPassword(inputVal);
         break;
       case 'signupUser':
-        setSignupUsername(inputVal);
+        setSignupEmail(inputVal);
         break;
       case 'signupPassword':
         setSignupPassword(inputVal);
@@ -94,26 +92,28 @@ const toggleSignup = (e) => {
 
   const clearForm = () => {
     // doing extra work, could be refactored later
-    setLoginUsername('');
+    setLoginEmail('');
     setLoginPassword('');
-    setSignupUsername('');
+    setSignupEmail('');
     setSignupPassword('');
   };
 
   const handleLogin = (e) => {
-      console.log('click fired on handleLogin')
-      e.preventDefault();
-      setLoginOpen(false);
-      clearForm();
-      
-      return;
+    console.log('click fired on handleLogin')
+    e.preventDefault();
+    // add functionality
+    //// info we want to send is signupEmail and signupPassword
+    props.login(loginEmail, loginPassword);
+    setLoginOpen(false);
+    clearForm();
+    return;
   }
 
   const handleSignup = (e) => {
     console.log('click fired on handleSignup');
     e.preventDefault();
     setSignupOpen(false);
-    console.log(signupUsername);
+    console.log(signupEmail);
     console.log(signupPassword);
     clearForm();
     return;
@@ -125,9 +125,9 @@ const toggleSignup = (e) => {
       <TextField
         required
         name="loginUser"
-        label="Username"
+        label="Email"
         fullWidth
-        value={loginUsername}
+        value={loginEmail}
         variant="outlined"
         onChange={handleChange}
       />
@@ -152,9 +152,9 @@ const toggleSignup = (e) => {
       <TextField
         required
         name="signupUser"
-        label="Username"
+        label="Email"
         fullWidth
-        value={signupUsername}
+        value={signupEmail}
         variant="outlined"
         onChange={handleChange}
       />

@@ -2,6 +2,7 @@ import * as types from '../constants/actionTypes';
 
 // Set initial state
 const initialState = {
+  isLoggedin: false,
   resources: [
     {
       name: '',
@@ -56,9 +57,19 @@ const resourceReducer = (state = initialState, action) => {
         ...state,
         resources: action.payload,
       };
+    case types.LOGIN:
+      
+      return{
+        ...state,
+        isLoggedIn: action.payload,
+      }
+            
     default:
       return state;
   }
+  //update state with login
+
+
 };
 
 export default resourceReducer;
