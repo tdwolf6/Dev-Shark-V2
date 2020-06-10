@@ -13,7 +13,6 @@ app.use(express.urlencoded({ extended: true }));
 // Set up routers
 app.use('/resource', resourceRouter);
 
-
 app.use('/', express.static(path.resolve(__dirname, '../../build')));
 // Send main app
 // app.get('/', (req, res) => {

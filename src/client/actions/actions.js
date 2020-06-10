@@ -82,3 +82,18 @@ export const downvote = (id, tech) => {
       });
   };
 };
+
+export const login = (email, password) => {
+  return (dispatch) => {
+    axios
+      .post('/users/login', { email: email, password: password})
+      .then((response) => {
+        // look for status code in respons, if 200 send true to update isLoggedIn in state,
+        // if bad status do something
+        dispatch({
+          type: types.LOGIN,
+          payload: response.data
+        });
+      });
+  };
+};

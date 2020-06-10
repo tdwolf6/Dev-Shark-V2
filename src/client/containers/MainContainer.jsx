@@ -4,6 +4,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import NavContainer from './NavContainer';
 import FeedContainer from './FeedContainer';
 import Login from '../components/Login';
+import { connect } from 'react-redux';
+import * as actions from '../actions/actions';
 
 // generate object to hold our custom stylings
 const useStyles = makeStyles((theme) => ({
@@ -31,6 +33,16 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+const mapStateToProps = (state) => ({
+//add pertinent state
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  //set up action dispathes
+  login: (email, password) => {
+    dispatch(actions.login(email, password))
+  }
+})
 
 
 // holds our top header bar, as well as our side bar (drawer), will also hold our feed container
@@ -47,7 +59,7 @@ const MainContainer = (props) => {
           Developer Resource Aggregator
         </Typography>
         </Typography>
-        <Login variant="contained" color="primary" className={classes.loginButton}/>
+        <Login variant="contained" color="primary" className={classes.loginButton} login={props.login}/>
         {/*<Button variant="contained" color="primary" className={classes.loginButton}>Login</Button>*/}
       </AppBar>
       {/* Drawer is our sidebar navigation component, stays permanently fixed to side, as docs recommend on desktop usage */}
@@ -58,4 +70,4 @@ const MainContainer = (props) => {
   );
 };
 
-export default MainContainer; 
+export default connect(mapStateToProps, mapDispatchToProps)(MainContainer); 
