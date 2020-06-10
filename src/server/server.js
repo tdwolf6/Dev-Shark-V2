@@ -1,4 +1,5 @@
 const express = require('express');
+const cookieParser = require('cookie-parser');
 const path = require('path');
 const app = express();
 const resourceRouter = require('./routes/resourceRouter');
@@ -10,6 +11,7 @@ const cors = require('cors');
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // Set up routers
 app.use('/resource', resourceRouter);
