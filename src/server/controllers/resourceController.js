@@ -1,4 +1,4 @@
-const db = require('./../models/resourceModels');
+const db = require('./../db/db');
 
 // Initialize controller object
 const resourceController = {};

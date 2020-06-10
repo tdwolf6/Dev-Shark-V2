@@ -1,8 +1,8 @@
 const { Pool } = require('pg');
+require('dotenv').config();
 // Link to resources database on elephantSQL
-const PG_URI =
-  // 'postgres://ondxptpk:A2iAcCDwhK8u_DJk6tkB9H5SEHLCbjRk@ruby.db.elephantsql.com:5432/ondxptpk';
-  `postgres://slbtcpev:LYK3KUB_Fn-7f5Z5cyQ0Q8CfJwtGKgRb@ruby.db.elephantsql.com:5432/slbtcpev`;
+const PG_URI = process.env.DB_PW;
+
 const pool = new Pool({
   connectionString: PG_URI,
 });
@@ -42,26 +42,28 @@ CREATE TABLE techs (
 );
 
 CREATE TABLE users (
-users_id serial PRIMARY KEY,
-email VARCHAR UNIQUE NOT NULL,
-password VARCHAR NOT NULL,
-favorites INT,
-FOREIGN KEY (favorites) REFERENCES favorites(favorites_id)
+  users_id serial PRIMARY KEY,
+  email VARCHAR UNIQUE NOT NULL,
+  password VARCHAR NOT NULL,
+  FOREIGN KEY (favorites) REFERENCES favorites(favorites_id)
 );
 
 // When adding tables that reference each other, you must omit 
 // FOREIGN KEY line and add it after both tables are created
 
-CREATE TABLE favorites (
-favorites_id serial PRIMARY KEY,
-users_id INT,
-resources_id INT,
-FOREIGN KEY (user_id) REFERENCES users(users_id),
-FOREIGN KEY (resource_id) REFERENCES resources(resources_id)
+CREATE TABLE favorite_resources (
+  favorite_resources_id serial PRIMARY KEY,
+  users_id INT,
+  resources_id INT,
+  FOREIGN KEY (user_id) REFERENCES users(users_id),
+  FOREIGN KEY (resource_id) REFERENCES resources(resources_id)
 );
 
-ALTER TABLE users 
-ADD CONSTRAINT <anyName> FOREIGN KEY (favorites) REFERENCES favorites(favorites_id);
+CREATE TABLE favorite_techs (
+  favorite_techs_id serial PRIMARY KEY,
+  users_id INT REFERENCES users(users_id),
+  techs_id INT REFERENCES techs(techs_id),
+)
 
 CREATE TABLE upvotes (
   upvotes_id serial PRIMARY KEY,
