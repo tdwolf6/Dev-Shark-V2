@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const resourceRouter = require('./routes/resourceRouter');
+const userRouter = require('./routes/userRouter');
 const PORT = 3000;
 const cors = require('cors');
 
@@ -12,7 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Set up routers
 app.use('/resource', resourceRouter);
-
+app.use('/user', userRouter);
 
 app.use('/', express.static(path.resolve(__dirname, '../../build')));
 // Send main app
@@ -32,7 +33,7 @@ app.use((err, req, res, next) => {
   console.log('invoking global error handler');
   const defaultErr = {
     log: 'Express error handler caught unknown middleware',
-    status: 400,
+    status: 500,
     message: { err: 'An error occurred' },
   };
 
