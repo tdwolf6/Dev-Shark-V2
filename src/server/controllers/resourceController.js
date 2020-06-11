@@ -91,11 +91,15 @@ resourceController.addResource = (req, res, next) => {
 
 // Increase the like count of a resource by one
 resourceController.addLike = (req, res, next) => {
-  let resourceId = req.body.id;
-  console.log('This is your resource id     ', resourceId);
+  // check res.locals.vote upvote downvote combination
+  // if (res.locals.vote.upvote === confirm || res.locals.vote.downvote === cancel)
+  // proceed to addLike
+  // else {return next()}
+  const resources_id = req.body.id;
+  console.log('This is your resource id     ', resources_id);
   // Increase like count by 1 for a resource(_id)
-  item = `UPDATE resources SET likes = likes + 1, liked = true WHERE _id = $1`;
-  const values = [resourceId];
+  item = `UPDATE resources SET likes = likes + 1 WHERE _id = $1`;
+  const values = [resources_id];
   db.query(item, values)
     .then(() => {
       return next();
@@ -110,10 +114,10 @@ resourceController.addLike = (req, res, next) => {
 
 // Decrease the like count of a resource by one
 resourceController.subtractLike = (req, res, next) => {
-  let resourceId = req.body.id;
+  let resources_id = req.body.id;
   // Decrease like count by 1 for a resource(id) if the likes > 0
-  item = `UPDATE resources SET likes = likes - 1 , liked = false WHERE _id = $1 and likes > 0`;
-  const values = [resourceId];
+  item = `UPDATE resources SET likes = likes - 1 WHERE _id = $1 and likes > 0`;
+  const values = [resources_id];
   db.query(item, values)
     .then(() => {
       return next();

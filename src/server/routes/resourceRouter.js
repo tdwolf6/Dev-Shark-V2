@@ -32,24 +32,4 @@ router.post(
   }
 );
 
-// Add a like and return the new list of resources
-router.put(
-  '/upvote',
-  resourceController.addLike,
-  resourceController.getResources,
-  (req, res) => {
-    return res.status(200).json(res.locals.resources);
-  }
-);
-
-// Subtract a like and return the new list of resources
-router.put(
-  '/downvote',
-  resourceController.subtractLike,
-  resourceController.getResources,
-  (req, res) => {
-    return res.status(200).json(res.locals.resources);
-  }
-);
-
 module.exports = router;
