@@ -1,7 +1,8 @@
 import React from 'react'
 import { Button } from '@material-ui/core';
-
+import Cookies from 'universal-cookie';
 import { withStyles } from '@material-ui/core/styles';
+const cookies = new Cookies();
 
 const StyledButton = withStyles({
   root: {
@@ -14,9 +15,9 @@ const Logout = (props) => {
 
   const handleLogout = (e) => {
     e.preventDefault();
+    console.log('DESTROYING COOKIE')
+    cookies.remove('jwt', { path: '/' });
     props.logout();
-    //props.getResources('Javascript');
-    //props.getTopics();
   }
   
   return (
