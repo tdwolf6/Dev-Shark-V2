@@ -44,6 +44,7 @@ const FeedItemContainer = (props) => {
         downvote={props.downvote}
         liked={elem.liked}
         addFav={props.addFav}
+        deleteFav={props.deleteFav}
       />
     );
   });

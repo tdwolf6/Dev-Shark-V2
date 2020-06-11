@@ -50,18 +50,25 @@ const resourceReducer = (state = initialState, action) => {
         resources: action.payload,
       };
     case types.LOGIN:
-      
-      return{
+
+      return {
         ...state,
         isLoggedIn: action.payload,
         favoriteResources: action.payload.favResources,
       }
-       
+
     case types.ADD_FAV:
       return {
         ...state,
         favoriteResources: action.payload,
       }
+
+    case types.DELETE_FAV:
+      return {
+        ...state,
+        favoriteResources: action.payload,
+      }
+
 
     case types.GET_USER_INFO:
       return {
