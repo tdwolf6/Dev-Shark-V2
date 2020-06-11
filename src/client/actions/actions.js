@@ -90,6 +90,7 @@ export const login = (email, password) => {
       .then((response) => {
         // look for status code in respons, if 200 send true to update isLoggedIn in state,
         // if bad status do something
+        console.log(response, 'RESPONSE IN LOGIN')
         console.log(response.data, ' RESPONSE data  IN LOGIN')
         dispatch({
           type: types.LOGIN,
@@ -112,3 +113,16 @@ export const addFav = (resource_id) => {
       });
   };
 };
+
+export const getUserInfo = () => {
+  return (dispatch) => {
+    axios
+      .get('/user')
+      .then((response) => {
+        dispatch({
+          type: types.GET_USER_INFO,
+          payload: response.data.favResources
+        })
+      })
+  }
+}

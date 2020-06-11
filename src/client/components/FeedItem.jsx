@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
@@ -56,6 +56,11 @@ const FeedItem = (props) => {
     }
   }
 
+  
+  useEffect(() => {
+    // call new action to get topics
+    setFav(props.favBoolean)
+  });
   
   
 

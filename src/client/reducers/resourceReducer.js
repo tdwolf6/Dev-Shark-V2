@@ -63,6 +63,12 @@ const resourceReducer = (state = initialState, action) => {
         favoriteResources: action.payload,
       }
 
+    case types.GET_USER_INFO:
+      return {
+        ...state,
+        favoriteResources: action.payload,
+      }
+
     default:
       return state;
   }
