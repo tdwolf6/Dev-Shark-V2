@@ -8,14 +8,12 @@ const router = express.Router();
 router.get(
   '/',
   userController.validateToken,
-  favoritesController.getFavResources,
+  favoritesController.getFavIds,
   (req, res) => {
-    return res
-      .status(200)
-      .json({
-        user_id: res.locals.users_id,
-        favResources: res.locals.favResources,
-      });
+    return res.status(200).json({
+      user_id: res.locals.users_id,
+      favResources: res.locals.favIds,
+    });
   }
 );
 
@@ -23,13 +21,13 @@ router.post(
   '/',
   userController.verifyUser,
   favoritesController.getFavTechs,
-  favoritesController.getFavResources,
+  favoritesController.getFavIds,
   (req, res) => {
     // send login confirmation and user info back to frontend
     return res.status(200).json({
       currentUser: res.locals.currentUser,
       favTechs: res.locals.favTechs,
-      favResources: res.locals.favResources,
+      favResources: res.locals.favIds,
     });
   }
 );
@@ -39,19 +37,19 @@ router.post(
   userController.validateToken,
   favoritesController.checkFavResource,
   favoritesController.addFavResource,
-  favoritesController.getFavResources,
+  favoritesController.getFavIds,
   (req, res) => {
-    return res.status(200).json({ favoriteResources: res.locals.favResources });
+    return res.status(200).json({ favoriteResources: res.locals.favIds });
   }
 );
 
 router.delete(
   '/favorite',
-  userController.validateToken, 
+  userController.validateToken,
   favoritesController.removeFavResource,
-  favoritesController.getFavResources,
+  favoritesController.getFavIds,
   (req, res) => {
-    return res.status(200).json({ favoriteResources: res.locals.favResources });
+    return res.status(200).json({ favoriteResources: res.locals.favIds });
   }
 );
 
