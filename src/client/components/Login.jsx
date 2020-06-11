@@ -1,17 +1,10 @@
 import React, { useState } from 'react'
 import Modal from '@material-ui/core/Modal';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
 import Typography from '@material-ui/core/Typography';
 import {
-  FormControl,
-  InputLabel,
-  Input,
   Button,
-  TextField,
-  Select,
-  MenuItem,
+  TextField
 } from '@material-ui/core';
 
 import axios from 'axios';
@@ -53,6 +46,13 @@ const RedTextTypography = withStyles({
     color: "#d92027"
   }
 })(Typography);
+
+const StyledButton = withStyles({
+  root: {
+    backgroundColor: 'white',
+    color: 'black',
+  }
+})(Button);
 
 const Login = (props) => {
   const classes = useStyles();
@@ -189,10 +189,10 @@ const Login = (props) => {
   return (
     <div>
       <div onClick={toggleLogin}>
-        <Button variant="outlined">
+        <StyledButton variant="outlined">
           {/* <AddIcon className={classes.extendedIcon} /> */}
           Login
-        </Button>
+        </StyledButton>
       </div>
       <div className={classes.floatedForm}>
         <Modal open={loginOpen} onClose={toggleLogin} >

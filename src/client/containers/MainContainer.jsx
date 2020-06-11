@@ -3,9 +3,11 @@ import { Container, Typography, AppBar, Tabs, Tab, Button } from '@material-ui/c
 import { makeStyles } from '@material-ui/core/styles';
 import NavContainer from './NavContainer';
 import FeedContainer from './FeedContainer';
-import Login from '../components/Login';
 import { connect } from 'react-redux';
 import * as actions from '../actions/actions';
+
+import Login from '../components/Login';
+import Logout from '../components/Logout';
 
 // generate object to hold our custom stylings
 const useStyles = makeStyles((theme) => ({
@@ -32,6 +34,11 @@ const useStyles = makeStyles((theme) => ({
     display: 'inline',
     marginLeft: '50%',
     border: '1px solid'
+  },
+  logoutButton: {
+    display: 'inline',
+    marginLeft: '50%',
+    border: '1px solid',
   },
   loginContainer: {
     display: 'flex',
@@ -81,7 +88,10 @@ const MainContainer = (props) => {
 
         <Typography variant="inherit" className={classes.loginContainer}>
           <p className={classes.email}>{ props.resources.isLoggedin ? props.resources.currentUser.email : null }</p>
+          {props.resources.isLoggedin ? 
+          <Logout variant="contained" color="primary" className={classes.logoutButton}/> :
           <Login variant="contained" color="primary" className={classes.loginButton} login={props.login}/>
+          }
         </Typography>
         
       </AppBar>
