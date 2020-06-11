@@ -106,9 +106,10 @@ export const addFav = (resource_id) => {
       .post('/user/favorite', {resources_id: resource_id})
       .then((response) => {
         console.log(response, '<++++++++++++++++++ response in from ADD FAV')
+        console.log(response.data, 'RESPONSE.DATA')
         dispatch({
           type: types.ADD_FAV,
-          payload: response.favResources
+          payload: response.data.favoriteResources
         });
       });
   };

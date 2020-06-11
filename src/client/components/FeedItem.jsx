@@ -48,6 +48,8 @@ const FeedItem = (props) => {
   };
 
   const [isFav, setFav] = useState(props.favBoolean);
+  
+  
   const toggleFav = () => {
     console.log(props.favoriteResources, 'props . favorite resources')
     if (!isFav){

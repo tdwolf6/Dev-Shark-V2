@@ -13,7 +13,7 @@ Upvote and downvote functions are passed down directly as props from the parent 
 
 */
 
-const FeedItemContainer = (props) => { 
+const FeedItemContainer = (props) => {
 
   // useEffect(() => {
   //   // call new action to get topics
@@ -24,10 +24,11 @@ const FeedItemContainer = (props) => {
   const resources = props.resources;
   const items = resources.map((elem, index) => {
     let favBoolean = false;
-    if (props.favoriteResources.includes(elem.resources_id)){
-      console.log('setting a true')
+
+    if (props.favoriteResources.includes(elem.resources_id)) {
       favBoolean = true;
     }
+
     return (
       <FeedItem
         favoriteResources={props.favoriteResources}
