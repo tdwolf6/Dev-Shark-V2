@@ -3,7 +3,7 @@ import resourceReducer from './resourceReducer';
 
 // Combine all reducers
 const reducers = combineReducers({
-  resources: resourceReducer,
+  userInfo: resourceReducer,
 });
 
 export default reducers;

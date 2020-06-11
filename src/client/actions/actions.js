@@ -102,6 +102,7 @@ export const login = (email, password) => {
     axios
       .post('/user', { email: email, password: password})
       .then((response) => {
+        console.log('RESPONSE IS', response)
         // look for status code in respons, if 200 send true to update isLoggedIn in state,
         // if bad status do something
         console.log(response, 'RESPONSE IN LOGIN')
@@ -160,3 +161,7 @@ export const getUserInfo = () => {
       })
   }
 }
+
+export const logout = () => ({
+  type: types.LOGOUT
+})

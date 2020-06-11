@@ -18,7 +18,7 @@ userController.verifyUser = (req, res, next) => {
       }
       // make jwt, set in cookie
       const token = jwt.sign(email, process.env.JWT_SECRET);
-      res.cookie('jwt', token, { httpOnly: true });
+      res.cookie('jwt', token, { httpOnly: false });
       res.locals.currentUser = query.rows[0];
       return next();
     })
