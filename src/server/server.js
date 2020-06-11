@@ -4,6 +4,7 @@ const path = require('path');
 const app = express();
 const resourceRouter = require('./routes/resourceRouter');
 const userRouter = require('./routes/userRouter');
+const techRouter = require('./routes/techRouter');
 const PORT = 3000;
 
 // Parse request body
@@ -15,6 +16,7 @@ app.use(cookieParser());
 // Set up routers
 app.use('/resource', resourceRouter);
 app.use('/user', userRouter);
+app.use('/tech', techRouter);
 
 app.use('/', express.static(path.resolve(__dirname, '../../build')));
 // Send main app
