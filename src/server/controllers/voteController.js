@@ -3,49 +3,41 @@ const db = require('../db/db');
 const voteController = {};
 
 let item = '';
-voteController.updateUpvote = (req, res, next) => {
-  // make a query to see if this user id has already upvoted this resource
-  // users_id in res.locals.users_id
-  const { users_id } = res.locals;
-  // resources_id is in req.body.resources_id
-  const { resources_id } = req.body;
-  // does this resource id linked to user id exist in upvotes table?
-  item = `SELECT * FROM upvote WHERE users_id = $1 AND resources_id = $2`;
-  const values = [users_id, resources_id];
+// Increase the like count of a resource by one
+voteController.addLike = (req, res, next) => {
+  const resources_id = req.body.id;
+  console.log('This is your resource id     ', resources_id);
+  // Increase like count by 1 for a resource(_id)
+  item = `UPDATE resources SET likes = likes + 1 WHERE _id = $1`;
+  const values = [resources_id];
   db.query(item, values)
-    .then((query) => {
-      if (!query.rows.length) {
-        // if yes, set res.locals.vote to { upvote: cancel }
-        // if no, set res.locals.vote to { upvote: confirm }
-        res.locals.vote = { upvote: 'confirm' };
-        return next();
-      } else {
-        res.locals.vote = { upvote: 'cancel' };
-        item = `DELETE FROM upvote WHERE users_id = $1 AND resources_id = $2`;
-        db.query(item, values)
-          .then((query) => {
-            return next();
-          })
-          .catch((err) => {
-            return next({
-              log: 'ERROR in voteController.updateUpvote',
-              message: { err: `ERROR in voteController.updateUpvote ${err}` },
-            });
-          });
-      }
+    .then(() => {
+      return next();
     })
     .catch((err) =>
       next({
-        log: 'ERROR in voteController.updateUpvote',
-        message: { err: `ERROR in voteController.updateUpvote ${err}` },
+        log: 'ERROR in resourceControllers.addLike',
+        message: { err: `ERROR in addLike ${err}` },
       })
     );
-  // if cancel, delete that entry inside upvote table
-  // if confirm, insert entry inside upvote table
 };
 
-voteController.updateDownvote = (req, res, next) => {
-  return next();
+// Decrease the like count of a resource by one
+voteController.subtractLike = (req, res, next) => {
+  let resources_id = req.body.id;
+  // Decrease like count by 1 for a resource(id) if the likes > 0
+  item = `UPDATE resources SET likes = likes - 1 WHERE _id = $1 and likes > 0`;
+  const values = [resources_id];
+  db.query(item, values)
+    .then(() => {
+      return next();
+    })
+    .catch((err) =>
+      next({
+        log: 'ERROR in resourceControllers.subtractLike',
+        message: { err: `ERROR in subtractLike ${err}` },
+      })
+    );
 };
 
 module.exports = voteController;
