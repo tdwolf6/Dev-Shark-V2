@@ -13,6 +13,7 @@ module.exports = {
     proxy: {
       '/resource': 'http://localhost:3000',
       '/user': 'http://localhost:3000',
+      '/tech': 'http://localhost:3000',
       hot: true,
     },
   },
