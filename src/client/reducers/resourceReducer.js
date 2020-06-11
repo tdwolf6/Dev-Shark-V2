@@ -6,6 +6,7 @@ const initialState = {
   currentUser: {},
   favoriteResources: [],
   favoriteTechs: [],
+  /*
   resources: [
     {
       name: '',
@@ -16,8 +17,11 @@ const initialState = {
       liked: false,
     },
   ],
+  */
+  resources: [],
   currentTopic: 'Javascript',
   topics: [],
+  //favoriteResources: [7, 9],
 };
 
 const resourceReducer = (state = initialState, action) => {
@@ -76,6 +80,32 @@ const resourceReducer = (state = initialState, action) => {
         favoriteResources: [],
         favoriteTechs: []
       }
+      /*
+      return {
+        ...state,
+        isLoggedIn: action.payload,
+        favoriteResources: action.payload.favResources,
+      }
+      */
+    case types.ADD_FAV:
+      return {
+        ...state,
+        favoriteResources: action.payload,
+      }
+
+    case types.DELETE_FAV:
+      return {
+        ...state,
+        favoriteResources: action.payload,
+      }
+
+
+    case types.GET_USER_INFO:
+      return {
+        ...state,
+        favoriteResources: action.payload,
+      }
+
     default:
       return state;
   }

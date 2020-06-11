@@ -51,6 +51,9 @@ const mapDispatchToProps = (dispatch) => ({
   getTopics: () => {
     dispatch(actions.getTopics());
   },
+  getUserInfo: () => {
+    dispatch(actions.getUserInfo());
+  }
 });
 
 function NavContainer(props) {
@@ -62,7 +65,8 @@ function NavContainer(props) {
   useEffect(() => {
     // call new action to get topics
     props.getTopics();
-    props.getResources(props.currentTopic);
+    props.getResources(props.currentTopic); 
+    props.getUserInfo();
   }, []);
   /* Drawer is our sidebar navigation component, stays permanently fixed to side, as docs recommend on desktop usage */
   return (

@@ -2,6 +2,7 @@ const express = require('express');
 const resourceController = require('../controllers/resourceController');
 const router = express.Router();
 
+// retrieves all topics in database to render when no user is logged in / user logs out, returns an array of string topics
 router.get('/getTopics', resourceController.getTopics, (req, res) => {
   return res.status(200).json(res.locals.topics);
 });
@@ -25,26 +26,6 @@ router.post(
   // so we must get tech_id before placing the resource in the Resources Table
   resourceController.getTechId,
   resourceController.addResource,
-  resourceController.getResources,
-  (req, res) => {
-    return res.status(200).json(res.locals.resources);
-  }
-);
-
-// Add a like and return the new list of resources
-router.put(
-  '/upvote',
-  resourceController.addLike,
-  resourceController.getResources,
-  (req, res) => {
-    return res.status(200).json(res.locals.resources);
-  }
-);
-
-// Subtract a like and return the new list of resources
-router.put(
-  '/downvote',
-  resourceController.subtractLike,
   resourceController.getResources,
   (req, res) => {
     return res.status(200).json(res.locals.resources);

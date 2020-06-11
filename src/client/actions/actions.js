@@ -19,7 +19,7 @@ export const getTopics = () => {
 export const getResource = (resource) => {
   return (dispatch) => {
     axios
-      .get(`http://localhost:3000/resource/${resource.toLowerCase()}`)
+      .get(`/resource/${resource.toLowerCase()}`)
       .then((response) => {
         dispatch({
           type: types.GET_RESOURCE,
@@ -44,7 +44,7 @@ export const updateTopic = (topic) => {
 // Input: resource name in the parameter and resource object to add to DB in body
 export const addResource = (resource) => {
   return (dispatch) => {
-    axios.post(`http://localhost:3000/resource/`, resource).then((response) => {
+    axios.post(`/resource/`, resource).then((response) => {
       dispatch({
         type: types.ADD_RESOURCE,
         payload: response.data,
@@ -58,7 +58,7 @@ export const addResource = (resource) => {
 export const upvote = (id, tech) => {
   return (dispatch) => {
     axios
-      .put('http://localhost:3000/resource/upvote', { id: id, tech: tech })
+      .put('/resource/upvote', { id: id, tech: tech })
       .then((response) => {
         dispatch({
           type: types.UPVOTE,
@@ -91,13 +91,62 @@ export const login = (email, password) => {
         console.log('RESPONSE IS', response)
         // look for status code in respons, if 200 send true to update isLoggedIn in state,
         // if bad status do something
+        console.log(response, 'RESPONSE IN LOGIN')
+        console.log(response.data, ' RESPONSE data  IN LOGIN')
         dispatch({
           type: types.LOGIN,
-          payload: response.data
+          payload: response.data,
         });
       });
   };
 };
+
+export const addFav = (resource_id) => {
+  return (dispatch) => {
+    axios
+      .post('/user/favorite', {resources_id: resource_id})
+      .then((response) => {
+        dispatch({
+          type: types.ADD_FAV,
+          payload: response.data.favoriteResources
+        });
+      });
+  };
+};
+
+export const deleteFav = (resource_id) => {
+  return (dispatch) => {
+    axios.delete('/user/favorite', {
+      headers: {
+        "Content-Type" : "application/json"
+      },
+      data: {
+        "resources_id": resource_id
+      }
+    })
+      .then((response) => {
+        console.log(response, " RESPONSE IN DELETE FAV <<<<<<<<<<<<<<<<<<<")
+        dispatch({
+          type: types.DELETE_FAV,
+          payload: response.data.favoriteResources
+        });
+      });
+  };
+}
+
+export const getUserInfo = () => {
+  return (dispatch) => {
+    axios
+      .get('/user')
+      .then((response) => {
+        console.log(response, '<------------- RESPONSE IN GET USER INFO')
+        dispatch({
+          type: types.GET_USER_INFO,
+          payload: response.data.favResources
+        })
+      })
+  }
+}
 
 export const logout = () => ({
   type: types.LOGOUT

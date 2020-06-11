@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import Box from '@material-ui/core/Box';
 import Card from '@material-ui/core/Card';
@@ -10,6 +10,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import FavoriteRoundedIcon from '@material-ui/icons/FavoriteRounded';
 import FavoriteBorderRoundedIcon from '@material-ui/icons/FavoriteBorderRounded';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
+import StarIcon from '@material-ui/icons/Star';
 
 const useStyles = makeStyles({
   itemWrap: {
@@ -25,26 +27,45 @@ const useStyles = makeStyles({
     marginTop: 8,
     marginBottom: 8,
   },
+  titleContainer: {
+    display: 'flex',
+    justifyContent: 'space-between'
+  },
+  coloredStar: {
+    color: '#B2002D'
+  }
 });
 
 const FeedItem = (props) => {
   const classes = useStyles();
 
-  // toggles the heart icon and calls action to increment/decrement 'likes' accordingly
-  // props.liked, props.tech, and props.id passed down from DB to parent component to FeedItem
-  const toggleHeart = () => {
-    if (props.liked) {
-      props.downvote(props.id, props.tech);
+  const [isFav, setFav] = useState(props.favBoolean);
+  
+  
+  const toggleFav = () => {
+    console.log(props.favoriteResources, 'props . favorite resources')
+    if (!isFav){
+      props.addFav(props.id);
     } else {
-      props.upvote(props.id, props.tech);
+      props.deleteFav(props.id);
     }
-  };
+  }
+
+  
+  useEffect(() => {
+    // call new action to get topics
+    setFav(props.favBoolean)
+  });
+  
+  
+
   return (
     <Card className={classes.itemWrap}>
       <CardContent>
-        <Box>
+        <Box className={classes.titleContainer}>
         {/* displays resource title */}
           <Typography variant="h6">{props.name}</Typography>
+          <Button onClick={toggleFav} >{isFav ? (<StarIcon  className={classes.coloredStar}/>) : (< StarBorderIcon className={classes.borderStar}/>) }</Button>
         </Box>
         {/* displays resource description */}
         <Typography variant="body1">{props.description}</Typography>
@@ -55,15 +76,6 @@ const FeedItem = (props) => {
             <a href={props.url} target="_blank">
               Visit Resource
             </a>
-          </Button>
-          {/* toggles heart */}
-          <Button size="small" onClick={() => toggleHeart()}>
-            {props.likes}
-            {props.liked ? (
-              <FavoriteRoundedIcon />
-            ) : (
-              <FavoriteBorderRoundedIcon />
-            )}
           </Button>
         </div>
       </CardContent>
