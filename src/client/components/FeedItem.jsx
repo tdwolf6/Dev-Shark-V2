@@ -32,7 +32,7 @@ const useStyles = makeStyles({
     justifyContent: 'space-between'
   },
   coloredStar: {
-    color: 'red'
+    color: '#B2002D'
   }
 });
 

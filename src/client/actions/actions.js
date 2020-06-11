@@ -19,7 +19,7 @@ export const getTopics = () => {
 export const getResource = (resource) => {
   return (dispatch) => {
     axios
-      .get(`http://localhost:3000/resource/${resource.toLowerCase()}`)
+      .get(`/resource/${resource.toLowerCase()}`)
       .then((response) => {
         dispatch({
           type: types.GET_RESOURCE,
@@ -44,7 +44,7 @@ export const updateTopic = (topic) => {
 // Input: resource name in the parameter and resource object to add to DB in body
 export const addResource = (resource) => {
   return (dispatch) => {
-    axios.post(`http://localhost:3000/resource/`, resource).then((response) => {
+    axios.post(`/resource/`, resource).then((response) => {
       dispatch({
         type: types.ADD_RESOURCE,
         payload: response.data,
@@ -58,7 +58,7 @@ export const addResource = (resource) => {
 export const upvote = (id, tech) => {
   return (dispatch) => {
     axios
-      .put('http://localhost:3000/resource/upvote', { id: id, tech: tech })
+      .put('/resource/upvote', { id: id, tech: tech })
       .then((response) => {
         dispatch({
           type: types.UPVOTE,
