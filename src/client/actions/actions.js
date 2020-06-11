@@ -22,6 +22,7 @@ export const getResource = (resource) => {
       axios
         .get('/user/favorite')
         .then((response) => {
+          
           dispatch({
             type:types.GET_RESOURCE,
             payload: response.data,
@@ -140,7 +141,7 @@ export const deleteFav = (resource_id) => {
         console.log(response, " RESPONSE IN DELETE FAV <<<<<<<<<<<<<<<<<<<")
         dispatch({
           type: types.DELETE_FAV,
-          payload: response.data.favoriteResources
+          payload: response.data
         });
       });
   };

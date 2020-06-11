@@ -183,6 +183,9 @@ const FeedForm = (props) => {
         <InputLabel>Tech</InputLabel>
         <Select name="tech" value={tech} onChange={handleChange} label="Tech">
           {techs.map((elem, index) => {
+            if (elem === 'Favorites'){
+              return;
+            }
             return (
               <MenuItem key={index} value={elem.toLowerCase()}>
                 {elem}

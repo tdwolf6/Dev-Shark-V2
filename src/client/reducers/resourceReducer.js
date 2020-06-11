@@ -65,9 +65,17 @@ const resourceReducer = (state = initialState, action) => {
       }
 
     case types.DELETE_FAV:
-      return {
-        ...state,
-        favoriteResources: action.payload,
+      if (state.currentTopic === 'Favorites'){
+        return {
+          ...state,
+          favoriteResources: action.payload.favoriteResources,
+          resources: action.payload.resources
+        }
+      } else {
+        return {
+          ...state,
+          favoriteResources: action.payload.favoriteResources
+        }
       }
 
 
