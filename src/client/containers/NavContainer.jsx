@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
 const mapStateToProps = (state) => ({
   topics: state.topics,
   currentTopic: state.currentTopic,
+  isLoggedIn: state.isLoggedin,
 });
 
 // pass in function that will make GET request to relevant topic from our DB
@@ -95,7 +96,7 @@ function NavContainer(props) {
             );
           })}
         </List>
-        <AddTech addTopic={props.addTopic}/>
+        <AddTech addTopic={props.addTopic} isLoggedIn={props.isLoggedIn}/>
       </div>
     </Drawer>
   );

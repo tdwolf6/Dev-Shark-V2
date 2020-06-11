@@ -99,7 +99,12 @@ export default function AddTech(props){
       let techName = { name };
       console.log('Sending the following resource to db:');
       console.log('lets rename resource obj ------->',techName.name);
-      props.addTopic(techName.name);
+      if (!props.isLoggedIn){
+        alert('Please Login to Add Tech')
+      }else{
+        return props.addTopic(techName.name)
+      }
+      ;
       setTimeout(() => {
         console.log('Resetting form and closing modal');
         clearForm();

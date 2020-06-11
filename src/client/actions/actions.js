@@ -107,6 +107,7 @@ export const login = (email, password) => {
         // if bad status do something
         console.log(response, 'RESPONSE IN LOGIN')
         console.log(response.data, ' RESPONSE data  IN LOGIN')
+        console.log(response.data.currentUser.users_id, '<--- should provide user id')
         dispatch({
           type: types.LOGIN,
           payload: response.data,
@@ -169,7 +170,7 @@ export const addTopic = (name) => {
         console.log(response, '<------------- RESPONSE IN GET TECH')
         console.log(response.data, '<------------- RESPONSE IN GET TECH')
         dispatch({
-          type: types.ADD_FAV,
+          type: types.ADD_TOPIC,
           payload: response.data
         });
       });

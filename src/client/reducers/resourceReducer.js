@@ -105,15 +105,21 @@ const resourceReducer = (state = initialState, action) => {
         }
       }
 
-    case types.GET_USER_INFO:
+      case types.GET_USER_INFO:        
+        return {
+          ...state,
+          isLoggedin: true, // CHANGED
+          favoriteResources: action.payload.favResources,
+          topics: ['Favorites', ...state.topics],
+          currentUser: { email: action.payload.email }
+          }
+        
+
+      case types.ADD_TOPIC:
       return {
         ...state,
-        isLoggedin: true, // CHANGED
-        favoriteResources: action.payload.favResources,
-        topics: ['Favorites', ...state.topics],
-        currentUser: { email: action.payload.email }
-
-      }
+        topics: [...state.topics,action.payload]
+      };
 
     default:
       return state;
