@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
   appBar: {
     display: 'flex',
     flexDirection: 'row',
+    justifyContent: 'space-between',
     zIndex: theme.zIndex.drawer + 1,
     padding: theme.spacing(2),
   },
@@ -29,12 +30,25 @@ const useStyles = makeStyles((theme) => ({
   },
   loginButton: {
     display: 'inline',
-    marginLeft: '50%'
+    marginLeft: '50%',
+    border: '1px solid'
+  },
+  loginContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginLeft: theme.spacing(2),
+    fontSize: 12
+  },
+  email: {
+    paddingRight: '10px'
   }
 }));
 
 const mapStateToProps = (state) => ({
-//add pertinent state
+  //add pertinent state
+  resources: state
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -48,6 +62,12 @@ const mapDispatchToProps = (dispatch) => ({
 const MainContainer = (props) => {
   const classes = useStyles();
   // functions as css-reset
+
+  console.log('Props', props)
+  console.log(`RESOURCES: ${props.resources.currentUser}`)
+  console.log(`LOGGED IN: ${props.resources.isLoggedin}`)
+  console.log(`RESOURCES 2: ${props.resources.resources}`)
+
   return (
     <Container maxWidth="lg" className={classes.root}>
       {/* AppBar, where the title of website is, stays on top*/}
@@ -56,11 +76,16 @@ const MainContainer = (props) => {
           {'</DevShark>'}
           <Typography variant="inherit" className={classes.subHeader}>
           Developer Resource Aggregator
+          </Typography>
         </Typography>
+
+        <Typography variant="inherit" className={classes.loginContainer}>
+          <p className={classes.email}>{ props.resources.isLoggedin ? props.resources.currentUser.email : null }</p>
+          <Login variant="contained" color="primary" className={classes.loginButton} login={props.login}/>
         </Typography>
-        <Login variant="contained" color="primary" className={classes.loginButton} login={props.login}/>
-        {/*<Button variant="contained" color="primary" className={classes.loginButton}>Login</Button>*/}
+        
       </AppBar>
+
       {/* Drawer is our sidebar navigation component, stays permanently fixed to side, as docs recommend on desktop usage */}
       <div className={classes.offset}></div>
       <NavContainer />

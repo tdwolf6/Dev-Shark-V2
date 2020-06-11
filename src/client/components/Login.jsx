@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Modal from '@material-ui/core/Modal';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import Typography from '@material-ui/core/Typography';
@@ -13,6 +13,8 @@ import {
   Select,
   MenuItem,
 } from '@material-ui/core';
+
+import axios from 'axios';
 
 // Add styling rules here
 const useStyles = makeStyles((theme) => ({
@@ -46,6 +48,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const RedTextTypography = withStyles({
+  root: {
+    color: "#d92027"
+  }
+})(Typography);
+
 const Login = (props) => {
   const classes = useStyles();
   const [loginOpen, setLoginOpen] = useState(false);
@@ -54,6 +62,7 @@ const Login = (props) => {
   const [signupOpen, setSignupOpen] = useState(false);
   const [signupEmail, setSignupEmail] = useState('');
   const [signupPassword, setSignupPassword] = useState('');
+  const [invalidLogin, setInvalidLogin] = useState(false);
 
   const toggleLogin = (e) => {
     if (loginOpen === false) {
@@ -96,17 +105,20 @@ const Login = (props) => {
     setLoginPassword('');
     setSignupEmail('');
     setSignupPassword('');
+    setInvalidLogin(false);
   };
 
   const handleLogin = (e) => {
     console.log('click fired on handleLogin')
     e.preventDefault();
-    // add functionality
-    //// info we want to send is signupEmail and signupPassword
-    props.login(loginEmail, loginPassword);
-    setLoginOpen(false);
-    clearForm();
-    return;
+    axios.post('/user', { email: loginEmail, password: loginPassword})
+    .then(response => {
+      props.login(loginEmail, loginPassword);
+      setLoginOpen(false);
+      clearForm();
+    }).catch(function (error) {
+      setInvalidLogin(true);
+    });
   }
 
   const handleSignup = (e) => {
@@ -122,6 +134,7 @@ const Login = (props) => {
   const loginBody = (
     <div className={classes.paper}>
       <Typography variant="h5">User Login</Typography>
+      {invalidLogin ? <RedTextTypography variant="subtitle1">Invalid</RedTextTypography> : null}
       <TextField
         required
         name="loginUser"
@@ -141,14 +154,14 @@ const Login = (props) => {
         variant="outlined"
         onChange={handleChange}
       />
-      <Button onClick={handleLogin}>Complete Login</Button>
-      <Button onClick={toggleSignup}>  New user? Click here to sign up </Button>
+      <Button onClick={handleLogin}>Login</Button>
+      <Button onClick={toggleSignup}>Sign Up</Button>
     </div>
   )
 
   const signupBody = (
     <div className={classes.paper}>
-      <Typography variant="h5">SIGNUP PAGE</Typography>
+      <Typography variant="h5">Sign Up</Typography>
       <TextField
         required
         name="signupUser"
@@ -168,8 +181,8 @@ const Login = (props) => {
         variant="outlined"
         onChange={handleChange}
       />
-      <Button onClick={toggleLogin}>Go Back to Login Page</Button>
-      <Button onClick={handleSignup}> Complete Signup </Button>
+      <Button onClick={toggleLogin}>Back to Login</Button>
+      <Button onClick={handleSignup}>Submit</Button>
     </div>
   )
 
