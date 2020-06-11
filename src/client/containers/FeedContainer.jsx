@@ -29,7 +29,7 @@ const mapStateToProps = (state) => ({
   resources: state.resources,
   currentTopic: state.currentTopic,
   favoriteResources: state.favoriteResources,
-  isLoggedIn: state.isLoggedIn,
+  isLoggedIn: state.isLoggedin, // CHANGED
 });
 
 // maps relevant dispatches to functions available as props for
