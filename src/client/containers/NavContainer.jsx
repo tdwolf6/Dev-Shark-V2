@@ -10,9 +10,12 @@ import {
   ListItemText,
 } from '@material-ui/core';
 import NavItem from '../components/NavItem';
+import AddTech  from '../components/AddTech'
 import * as actions from '../actions/actions';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import Modal from '@material-ui/core/Modal';
+import Fab from '@material-ui/core/Fab';
 // define width of sidebar
 const drawerWidth = 200;
 
@@ -53,6 +56,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   getUserInfo: () => {
     dispatch(actions.getUserInfo());
+  },
+  addTopic: (techName) =>{
+    dispatch(actions.addTopic(techName));
   }
 });
 
@@ -89,6 +95,7 @@ function NavContainer(props) {
             );
           })}
         </List>
+        <AddTech addTopic={props.addTopic}/>
       </div>
     </Drawer>
   );

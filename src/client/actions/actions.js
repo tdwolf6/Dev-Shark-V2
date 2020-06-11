@@ -161,6 +161,19 @@ export const getUserInfo = () => {
       })
   }
 }
+export const addTopic = (name) => {
+  return (dispatch) => {
+    axios
+      .post('/tech', {tech: name})
+      .then((response) => {
+        console.log(response, '<------------- RESPONSE IN GET TECH')
+        dispatch({
+          type: types.ADD_FAV,
+          payload: response.data.name
+        });
+      });
+  };
+};
 
 export const logout = () => ({
   type: types.LOGOUT
