@@ -74,12 +74,15 @@ const resourceReducer = (state = initialState, action) => {
         topics: ['Favorites', ...state.topics]
       }
     case types.LOGOUT:
+      const topics = [...state.topics];
+      const newTopics = topics.slice(1);
       return {
         ...state,
         isLoggedin: false,
         currentUser: {},
         favoriteResources: [],
-        favoriteTechs: []
+        favoriteTechs: [],
+        topics: [...newTopics]
       }
       
     case types.ADD_FAV:
@@ -105,7 +108,7 @@ const resourceReducer = (state = initialState, action) => {
     case types.GET_USER_INFO:
       return {
         ...state,
-        isLoggedIn: true,
+        isLoggedin: true, // CHANGED
         favoriteResources: action.payload,
         topics: ['Favorites', ...state.topics]
 

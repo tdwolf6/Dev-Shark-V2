@@ -41,11 +41,9 @@ const FeedItem = (props) => {
 
   const [isFav, setFav] = useState(props.favBoolean);
   
-  
   const toggleFav = () => {
-    console.log('FEEDITEM PROPS', props)
     if (!props.isLoggedIn){
-      alert('User is not logged in!  Please log in to be able to favorite resources')
+      alert('Please Login to Favorite')
     } else {
       if (!isFav){
         props.addFav(props.id);
