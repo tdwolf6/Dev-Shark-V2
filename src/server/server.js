@@ -5,10 +5,9 @@ const app = express();
 const resourceRouter = require('./routes/resourceRouter');
 const userRouter = require('./routes/userRouter');
 const PORT = 3000;
-const cors = require('cors');
 
 // Parse request body
-app.use(cors());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
