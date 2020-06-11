@@ -3,18 +3,10 @@ import * as types from '../constants/actionTypes';
 // Set initial state
 const initialState = {
   isLoggedin: false,
-  resources: [
-    {
-      name: '',
-      id: 0,
-      likes: 0,
-      url: '',
-      description: '',
-      liked: false,
-    },
-  ],
+  resources: [],
   currentTopic: 'Javascript',
   topics: [],
+  favoriteResources: [7, 9],
 };
 
 const resourceReducer = (state = initialState, action) => {
@@ -62,8 +54,15 @@ const resourceReducer = (state = initialState, action) => {
       return{
         ...state,
         isLoggedIn: action.payload,
+        favoriteResources: action.payload.favResources,
       }
-            
+       
+    case types.ADD_FAV:
+      return {
+        ...state,
+        favoriteResources: action.payload,
+      }
+
     default:
       return state;
   }

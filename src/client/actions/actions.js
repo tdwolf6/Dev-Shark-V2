@@ -90,9 +90,24 @@ export const login = (email, password) => {
       .then((response) => {
         // look for status code in respons, if 200 send true to update isLoggedIn in state,
         // if bad status do something
+        console.log(response.data, ' RESPONSE data  IN LOGIN')
         dispatch({
           type: types.LOGIN,
           payload: response.data
+        });
+      });
+  };
+};
+
+export const addFav = (resource_id) => {
+  return (dispatch) => {
+    axios
+      .post('/user/favorite', {resources_id: resource_id})
+      .then((response) => {
+        console.log(response, '<++++++++++++++++++ response in from ADD FAV')
+        dispatch({
+          type: types.ADD_FAV,
+          payload: response.favResources
         });
       });
   };

@@ -35,7 +35,7 @@ router.post(
 
 router.delete(
   '/favorite',
-  userController.validateToken,
+  userController.validateToken, 
   favoritesController.removeFavResource,
   favoritesController.getFavResources,
   (req, res) => {

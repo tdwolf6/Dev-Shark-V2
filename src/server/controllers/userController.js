@@ -40,9 +40,11 @@ userController.validateToken = (req, res, next) => {
     const values = [decoded];
     db.query(item, values).then((query) => {
       res.locals.users_id = query.rows[0].users_id;
+      console.log('validate token success, moving on')
       return next();
     });
   } else {
+    console.log('validate token fail')
     // figure out logic for what to do in front end. WHEN do they need to verify jwt, and what happens if it fails?
     return res.status(400).send('jwt verify failed');
   }

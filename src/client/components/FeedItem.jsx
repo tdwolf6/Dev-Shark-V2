@@ -25,6 +25,13 @@ const useStyles = makeStyles({
     marginTop: 8,
     marginBottom: 8,
   },
+  titleContainer: {
+    display: 'flex',
+    justifyContent: 'space-between'
+  },
+  addFavClicked: {
+    backgroundColor: 'yellow'
+  }
 });
 
 const FeedItem = (props) => {
@@ -40,14 +47,25 @@ const FeedItem = (props) => {
     }
   };
 
+  const [isFav, setFav] = useState(props.favBoolean);
+  const toggleFav = () => {
+    console.log(props.favoriteResources, 'props . favorite resources')
+    if (!isFav){
+      props.addFav(props.id)
+      setFav(true);
+    }
+  }
+
+  
   
 
   return (
     <Card className={classes.itemWrap}>
       <CardContent>
-        <Box>
+        <Box className={classes.titleContainer}>
         {/* displays resource title */}
           <Typography variant="h6">{props.name}</Typography>
+          <button onClick={toggleFav} className={isFav ? classes.addFavClicked : classes.addFav}>ADD FAV</button>
         </Box>
         {/* displays resource description */}
         <Typography variant="body1">{props.description}</Typography>
