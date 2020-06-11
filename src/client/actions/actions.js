@@ -119,6 +119,7 @@ export const getUserInfo = () => {
     axios
       .get('/user')
       .then((response) => {
+        console.log(response, '<------------- RESPONSE IN GET USER INFO')
         dispatch({
           type: types.GET_USER_INFO,
           payload: response.data.favResources

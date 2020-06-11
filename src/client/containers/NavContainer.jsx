@@ -66,7 +66,7 @@ function NavContainer(props) {
     // call new action to get topics
     props.getTopics();
     props.getResources(props.currentTopic); 
-    // props.getUserInfo();
+    props.getUserInfo();
   }, []);
   /* Drawer is our sidebar navigation component, stays permanently fixed to side, as docs recommend on desktop usage */
   return (
