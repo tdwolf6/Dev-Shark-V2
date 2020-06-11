@@ -105,8 +105,6 @@ export const addFav = (resource_id) => {
     axios
       .post('/user/favorite', {resources_id: resource_id})
       .then((response) => {
-        console.log(response, '<++++++++++++++++++ response in from ADD FAV')
-        console.log(response.data, 'RESPONSE.DATA')
         dispatch({
           type: types.ADD_FAV,
           payload: response.data.favoriteResources
@@ -114,6 +112,26 @@ export const addFav = (resource_id) => {
       });
   };
 };
+
+export const deleteFav = (resource_id) => {
+  return (dispatch) => {
+    axios.delete('/user/favorite', {
+      headers: {
+        "Content-Type" : "application/json"
+      },
+      data: {
+        "resources_id": resource_id
+      }
+    })
+      .then((response) => {
+        console.log(response, " RESPONSE IN DELETE FAV <<<<<<<<<<<<<<<<<<<")
+        dispatch({
+          type: types.DELETE_FAV,
+          payload: response.data.favoriteResources
+        });
+      });
+  };
+}
 
 export const getUserInfo = () => {
   return (dispatch) => {

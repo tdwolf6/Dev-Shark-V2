@@ -45,7 +45,10 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(actions.downvote(resource_id, resource_tech));
   },
   addFav: (resource_id) => {
-    dispatch(actions.addFav(resource_id))
+    dispatch(actions.addFav(resource_id));
+  },
+  deleteFav: (resource_id) => {
+    dispatch(actions.deleteFav(resource_id));
   }
 });
 
@@ -61,6 +64,7 @@ const FeedContainer = (props) => {
         upvote={props.upvote}
         downvote={props.downvote}
         addFav={props.addFav}
+        deleteFav={props.deleteFav}
       />
       <FeedForm />
     </div>
