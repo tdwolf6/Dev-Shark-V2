@@ -53,8 +53,9 @@ const resourceReducer = (state = initialState, action) => {
 
       return {
         ...state,
-        isLoggedIn: action.payload,
+        isLoggedIn: true,
         favoriteResources: action.payload.favResources,
+        topics: ['Favorites', ...state.topics]
       }
 
     case types.ADD_FAV:
@@ -64,16 +65,27 @@ const resourceReducer = (state = initialState, action) => {
       }
 
     case types.DELETE_FAV:
-      return {
-        ...state,
-        favoriteResources: action.payload,
+      if (state.currentTopic === 'Favorites'){
+        return {
+          ...state,
+          favoriteResources: action.payload.favoriteResources,
+          resources: action.payload.resources
+        }
+      } else {
+        return {
+          ...state,
+          favoriteResources: action.payload.favoriteResources
+        }
       }
 
 
     case types.GET_USER_INFO:
       return {
         ...state,
+        isLoggedIn: true,
         favoriteResources: action.payload,
+        topics: ['Favorites', ...state.topics]
+
       }
 
     default:
