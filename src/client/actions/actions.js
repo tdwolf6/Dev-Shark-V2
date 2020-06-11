@@ -17,16 +17,30 @@ export const getTopics = () => {
 // Send get request to server for resource (tech name)
 // Input: resource name
 export const getResource = (resource) => {
-  return (dispatch) => {
-    axios
-      .get(`/resource/${resource.toLowerCase()}`)
-      .then((response) => {
-        dispatch({
-          type: types.GET_RESOURCE,
-          payload: response.data,
+  if (resource === 'Favorites'){
+    return (dispatch) => {
+      axios
+        .get('/user/favorite')
+        .then((response) => {
+          
+          dispatch({
+            type:types.GET_RESOURCE,
+            payload: response.data,
+          })
+        })
+    }
+  } else {
+    return (dispatch) => {
+      axios
+        .get(`/resource/${resource.toLowerCase()}`)
+        .then((response) => {
+          dispatch({
+            type: types.GET_RESOURCE,
+            payload: response.data,
+          });
         });
-      });
-  };
+    };
+  }
 };
 
 // Update the current topic to be rendered on screen (used once for initial load)
@@ -44,7 +58,7 @@ export const updateTopic = (topic) => {
 // Input: resource name in the parameter and resource object to add to DB in body
 export const addResource = (resource) => {
   return (dispatch) => {
-    axios.post(`/resource/`, resource).then((response) => {
+    axios.post(`/resource`, resource).then((response) => {
       dispatch({
         type: types.ADD_RESOURCE,
         payload: response.data,
@@ -128,7 +142,7 @@ export const deleteFav = (resource_id) => {
         console.log(response, " RESPONSE IN DELETE FAV <<<<<<<<<<<<<<<<<<<")
         dispatch({
           type: types.DELETE_FAV,
-          payload: response.data.favoriteResources
+          payload: response.data
         });
       });
   };

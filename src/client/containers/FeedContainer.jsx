@@ -29,6 +29,7 @@ const mapStateToProps = (state) => ({
   resources: state.resources,
   currentTopic: state.currentTopic,
   favoriteResources: state.favoriteResources,
+  isLoggedIn: state.isLoggedIn,
 });
 
 // maps relevant dispatches to functions available as props for
@@ -59,6 +60,7 @@ const FeedContainer = (props) => {
     <div className={classes.shiftDown}>
       <FeedHeader currentTopic={props.currentTopic} />
       <FeedItemContainer
+        isLoggedIn={props.isLoggedIn}
         favoriteResources={props.favoriteResources}
         resources={props.resources}
         upvote={props.upvote}
