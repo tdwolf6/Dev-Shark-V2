@@ -59,7 +59,7 @@ router.get(
   userController.validateToken,
   favoritesController.getFavResources,
   (req, res) => {
-    return res.status(200).json({ favoriteResources: res.locals.favResources });
+    return res.status(200).json(res.locals.favResources);
   }
 );
 
