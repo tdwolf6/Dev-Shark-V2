@@ -47,9 +47,10 @@ router.delete(
   '/favorite',
   userController.validateToken,
   favoritesController.removeFavResource,
+  favoritesController.getFavResources,
   favoritesController.getFavIds,
   (req, res) => {
-    return res.status(200).json({ favoriteResources: res.locals.favIds });
+    return res.status(200).json({ favoriteResources: res.locals.favIds, resources: res.locals.favResources });
   }
 );
 
