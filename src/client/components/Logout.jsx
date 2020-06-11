@@ -15,7 +15,7 @@ const Logout = (props) => {
 
   const handleLogout = (e) => {
     e.preventDefault();
-    console.log('DESTROYING COOKIE')
+    console.log('DESTROYING COOKIE', document.cookie)
     cookies.remove('jwt', { path: '/' });
     props.logout();
   }

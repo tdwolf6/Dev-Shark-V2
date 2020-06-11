@@ -95,7 +95,7 @@ const MainContainer = (props) => {
 
         <Typography variant="inherit" className={classes.loginContainer}>
           <p className={classes.email}>{ props.resources.isLoggedin ? props.resources.currentUser.email : null }</p>
-          {props.resources.isLoggedin ? 
+          {props.resources.isLoggedin ?
           <Logout variant="contained" color="primary" className={classes.logoutButton} logout={props.logout} resources={props.getResources} topics={props.getTopics}/> :
           <Login variant="contained" color="primary" className={classes.loginButton} login={props.login}/>
           }
