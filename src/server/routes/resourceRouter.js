@@ -2,6 +2,7 @@ const express = require('express');
 const resourceController = require('../controllers/resourceController');
 const router = express.Router();
 
+// retrieves all topics in database to render when no user is logged in / user logs out, returns an array of string topics
 router.get('/getTopics', resourceController.getTopics, (req, res) => {
   return res.status(200).json(res.locals.topics);
 });
