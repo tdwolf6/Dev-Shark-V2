@@ -91,10 +91,6 @@ resourceController.addResource = (req, res, next) => {
 
 // Increase the like count of a resource by one
 resourceController.addLike = (req, res, next) => {
-  // check res.locals.vote upvote downvote combination
-  // if (res.locals.vote.upvote === confirm || res.locals.vote.downvote === cancel)
-  // proceed to addLike
-  // else {return next()}
   const resources_id = req.body.id;
   console.log('This is your resource id     ', resources_id);
   // Increase like count by 1 for a resource(_id)

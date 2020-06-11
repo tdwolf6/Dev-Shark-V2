@@ -50,7 +50,10 @@ router.delete(
   favoritesController.getFavResources,
   favoritesController.getFavIds,
   (req, res) => {
-    return res.status(200).json({ favoriteResources: res.locals.favIds, resources: res.locals.favResources });
+    return res.status(200).json({
+      favoriteResources: res.locals.favIds,
+      resources: res.locals.favResources,
+    });
   }
 );
 
@@ -64,12 +67,21 @@ router.get(
   }
 );
 
-// Add a like and return the new list of resources
+// Upvote a resource and return the new list of resources
 router.put(
   '/upvote',
   userController.validateToken,
-  voteController.updateUpvote,
   resourceController.addLike,
+  resourceController.getResources,
+  (req, res) => {
+    return res.status(200).json(res.locals.resources);
+  }
+);
+
+// Remove upvote on a resource and return the new list of resources
+router.put(
+  '/removeUpvote',
+  userController.validateToken,
   resourceController.subtractLike,
   resourceController.getResources,
   (req, res) => {
@@ -77,13 +89,22 @@ router.put(
   }
 );
 
-// Subtract a like and return the new list of resources
+// Downvote a resource and return the new list of resources
 router.put(
   '/downvote',
   userController.validateToken,
-  voteController.updateDownvote,
-  resourceController.addLike,
   resourceController.subtractLike,
+  resourceController.getResources,
+  (req, res) => {
+    return res.status(200).json(res.locals.resources);
+  }
+);
+
+// Remove downvote on a resource and return the new list of resources
+router.put(
+  '/removedownvote',
+  userController.validateToken,
+  resourceController.addLike,
   resourceController.getResources,
   (req, res) => {
     return res.status(200).json(res.locals.resources);
