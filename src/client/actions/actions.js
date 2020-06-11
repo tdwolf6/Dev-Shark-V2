@@ -94,7 +94,7 @@ export const login = (email, password) => {
         console.log(response.data, ' RESPONSE data  IN LOGIN')
         dispatch({
           type: types.LOGIN,
-          payload: response.data
+          payload: response.data,
         });
       });
   };
