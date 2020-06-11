@@ -53,30 +53,30 @@ CREATE TABLE users (
 
 CREATE TABLE favorite_resources (
   favorite_resources_id serial PRIMARY KEY,
-  users_id INT,
-  resources_id INT,
-  FOREIGN KEY (user_id) REFERENCES users(users_id),
-  FOREIGN KEY (resource_id) REFERENCES resources(resources_id)
+  users_id INT NOT NULL,
+  resources_id INT NOT NULL,
+  FOREIGN KEY (users_id) REFERENCES users(users_id),
+  FOREIGN KEY (resources_id) REFERENCES resources(resources_id)
 );
 
 CREATE TABLE favorite_techs (
   favorite_techs_id serial PRIMARY KEY,
-  users_id INT REFERENCES users(users_id),
-  techs_id INT REFERENCES techs(techs_id),
+  users_id INT NOT NULL REFERENCES users(users_id),
+  techs_id INT NOT NULL REFERENCES techs(techs_id),
 )
 
 CREATE TABLE upvotes (
   upvotes_id serial PRIMARY KEY,
-  users_id INT,
-  resources_id INT,
+  users_id INT NOT NULL,
+  resources_id INT NULL,
   FOREIGN KEY (users_id) REFERENCES users(users_id),
   FOREIGN KEY (resources_id) REFERENCES resources(resources_id)
 );
 
 CREATE TABLE downvotes (
   downvotes_id serial PRIMARY KEY,
-  users_id INT REFERENCES users(users_id),
-  resources_id INT REFERENCES resources(resources_id)
+  users_id INT NOT NULL REFERENCES users(users_id),
+  resources_id INT NOT NULL REFERENCES resources(resources_id)
 );
 
 */
