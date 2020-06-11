@@ -3,6 +3,10 @@ const userController = require('../controllers/userController');
 const favoritesController = require('../controllers/favoritesController');
 const router = express.Router();
 
+router.get('/', userController.validateToken, (req, res) => {
+  return res.status(200).json({ user_id: res.locals.users_id });
+});
+
 router.post(
   '/',
   userController.verifyUser,
