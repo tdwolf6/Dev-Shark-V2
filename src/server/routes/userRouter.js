@@ -1,11 +1,23 @@
 const express = require('express');
 const userController = require('../controllers/userController');
 const favoritesController = require('../controllers/favoritesController');
+const voteController = require('../controllers/voteController');
+const resourceController = require('../controllers/resourceController');
 const router = express.Router();
 
-router.get('/', userController.validateToken, (req, res) => {
-  return res.status(200).json({ user_id: res.locals.users_id });
-});
+router.get(
+  '/',
+  userController.validateToken,
+  favoritesController.getFavResources,
+  (req, res) => {
+    return res
+      .status(200)
+      .json({
+        user_id: res.locals.users_id,
+        favResources: res.locals.favResources,
+      });
+  }
+);
 
 router.post(
   '/',
@@ -35,7 +47,7 @@ router.post(
 
 router.delete(
   '/favorite',
-  userController.validateToken,
+  userController.validateToken, 
   favoritesController.removeFavResource,
   favoritesController.getFavResources,
   (req, res) => {
@@ -50,6 +62,32 @@ router.get(
   favoritesController.getFavResources,
   (req, res) => {
     return res.status(200).json({ favoriteResources: res.locals.favResources });
+  }
+);
+
+// Add a like and return the new list of resources
+router.put(
+  '/upvote',
+  userController.validateToken,
+  voteController.updateUpvote,
+  resourceController.addLike,
+  resourceController.subtractLike,
+  resourceController.getResources,
+  (req, res) => {
+    return res.status(200).json(res.locals.resources);
+  }
+);
+
+// Subtract a like and return the new list of resources
+router.put(
+  '/downvote',
+  userController.validateToken,
+  voteController.updateDownvote,
+  resourceController.addLike,
+  resourceController.subtractLike,
+  resourceController.getResources,
+  (req, res) => {
+    return res.status(200).json(res.locals.resources);
   }
 );
 

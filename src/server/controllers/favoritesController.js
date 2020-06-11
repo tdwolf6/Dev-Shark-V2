@@ -48,12 +48,15 @@ favoritesController.checkFavResource = (req, res, next) => {
   db.query(item, values)
     .then((query) => {
       if (!query.rows[0]) {
+        console.log('successful check fav resource')
         return next();
       } else {
+        console.log('FAIL inside check fav resource')
         return res.status(400).send('Resource is already favorited!');
       }
     })
     .catch((err) => {
+      console.log('FAIL inside check fav resource')
       return next({
         log: 'ERROR in userControllers.checkFavResource',
         message: { err: `ERROR in userControllers.checkFavResource ${err}` },
