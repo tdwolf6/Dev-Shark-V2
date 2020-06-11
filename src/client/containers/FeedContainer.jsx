@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
 const mapStateToProps = (state) => ({
   resources: state.resources,
   currentTopic: state.currentTopic,
+  favoriteResources: state.favoriteResources,
 });
 
 // maps relevant dispatches to functions available as props for
@@ -43,6 +44,9 @@ const mapDispatchToProps = (dispatch) => ({
   downvote: (resource_id, resource_tech) => {
     dispatch(actions.downvote(resource_id, resource_tech));
   },
+  addFav: (resource_id) => {
+    dispatch(actions.addFav(resource_id))
+  }
 });
 
 const FeedContainer = (props) => {
@@ -52,9 +56,11 @@ const FeedContainer = (props) => {
     <div className={classes.shiftDown}>
       <FeedHeader currentTopic={props.currentTopic} />
       <FeedItemContainer
+        favoriteResources={props.favoriteResources}
         resources={props.resources}
         upvote={props.upvote}
         downvote={props.downvote}
+        addFav={props.addFav}
       />
       <FeedForm />
     </div>

@@ -86,10 +86,12 @@ export const downvote = (id, tech) => {
 export const login = (email, password) => {
   return (dispatch) => {
     axios
-      .post('/user/login', { email: email, password: password })
+      .post('/user', { email: email, password: password})
       .then((response) => {
         // look for status code in respons, if 200 send true to update isLoggedIn in state,
         // if bad status do something
+        console.log(response, 'RESPONSE IN LOGIN')
+        console.log(response.data, ' RESPONSE data  IN LOGIN')
         dispatch({
           type: types.LOGIN,
           payload: response.data,
@@ -97,3 +99,32 @@ export const login = (email, password) => {
       });
   };
 };
+
+export const addFav = (resource_id) => {
+  return (dispatch) => {
+    axios
+      .post('/user/favorite', {resources_id: resource_id})
+      .then((response) => {
+        console.log(response, '<++++++++++++++++++ response in from ADD FAV')
+        console.log(response.data, 'RESPONSE.DATA')
+        dispatch({
+          type: types.ADD_FAV,
+          payload: response.data.favoriteResources
+        });
+      });
+  };
+};
+
+export const getUserInfo = () => {
+  return (dispatch) => {
+    axios
+      .get('/user')
+      .then((response) => {
+        console.log(response, '<------------- RESPONSE IN GET USER INFO')
+        dispatch({
+          type: types.GET_USER_INFO,
+          payload: response.data.favResources
+        })
+      })
+  }
+}
