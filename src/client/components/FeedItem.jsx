@@ -43,12 +43,16 @@ const FeedItem = (props) => {
   
   
   const toggleFav = () => {
-    console.log(props.favoriteResources, 'props . favorite resources')
-    if (!isFav){
-      props.addFav(props.id);
+    if (!props.isLoggedIn){
+      alert('User is not logged in!  Please log in to be able to favorite resources')
     } else {
-      props.deleteFav(props.id);
+      if (!isFav){
+        props.addFav(props.id);
+      } else {
+        props.deleteFav(props.id);
+      }
     }
+
   }
 
   

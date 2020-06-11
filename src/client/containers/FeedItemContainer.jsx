@@ -45,6 +45,7 @@ const FeedItemContainer = (props) => {
         liked={elem.liked}
         addFav={props.addFav}
         deleteFav={props.deleteFav}
+        isLoggedIn={props.isLoggedIn}
       />
     );
   });
