@@ -39,6 +39,9 @@ const FeedItem = (props) => {
       props.upvote(props.id, props.tech);
     }
   };
+
+  
+
   return (
     <Card className={classes.itemWrap}>
       <CardContent>
