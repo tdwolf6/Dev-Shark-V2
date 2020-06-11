@@ -3,10 +3,25 @@ import * as types from '../constants/actionTypes';
 // Set initial state
 const initialState = {
   isLoggedin: false,
+  currentUser: {},
+  favoriteResources: [],
+  favoriteTechs: [],
+  /*
+  resources: [
+    {
+      name: '',
+      id: 0,
+      likes: 0,
+      url: '',
+      description: '',
+      liked: false,
+    },
+  ],
+  */
   resources: [],
   currentTopic: 'Javascript',
   topics: [],
-  favoriteResources: [7, 9],
+  //favoriteResources: [7, 9],
 };
 
 const resourceReducer = (state = initialState, action) => {
@@ -50,14 +65,26 @@ const resourceReducer = (state = initialState, action) => {
         resources: action.payload,
       };
     case types.LOGIN:
-
       return {
         ...state,
-        isLoggedIn: true,
+        isLoggedin: true,
+        currentUser: action.payload.currentUser,
         favoriteResources: action.payload.favResources,
+        favoriteTechs: action.payload.favoriteTechs,
         topics: ['Favorites', ...state.topics]
       }
-
+    case types.LOGOUT:
+      const topics = [...state.topics];
+      const newTopics = topics.slice(1);
+      return {
+        ...state,
+        isLoggedin: false,
+        currentUser: {},
+        favoriteResources: [],
+        favoriteTechs: [],
+        topics: [...newTopics]
+      }
+      
     case types.ADD_FAV:
       return {
         ...state,
@@ -78,11 +105,10 @@ const resourceReducer = (state = initialState, action) => {
         }
       }
 
-
     case types.GET_USER_INFO:
       return {
         ...state,
-        isLoggedIn: true,
+        isLoggedin: true, // CHANGED
         favoriteResources: action.payload,
         topics: ['Favorites', ...state.topics]
 
@@ -91,9 +117,6 @@ const resourceReducer = (state = initialState, action) => {
     default:
       return state;
   }
-  //update state with login
-
-
 };
 
 export default resourceReducer;
