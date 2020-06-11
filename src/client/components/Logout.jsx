@@ -10,12 +10,15 @@ const StyledButton = withStyles({
   }
 })(Button);
 
-const handleLogout = (e) => {
-  e.preventDefault();
-  console.log('KEKW')
-}
-
 const Logout = (props) => {
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+    props.logout();
+    //props.getResources('Javascript');
+    //props.getTopics();
+  }
+  
   return (
     <StyledButton onClick={handleLogout} variant="outlined">Logout</StyledButton>
   );

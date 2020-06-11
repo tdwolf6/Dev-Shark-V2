@@ -60,9 +60,16 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   //set up action dispathes
-  login: (email, password) => {
-    dispatch(actions.login(email, password))
-  }
+  login: (email, password) => { dispatch(actions.login(email, password)) },
+  logout: () => dispatch(actions.logout()),
+
+  getResources: (tech_name) => {
+    dispatch(actions.getResource(tech_name));
+    dispatch(actions.updateTopic(tech_name));
+  },
+  getTopics: () => {
+    dispatch(actions.getTopics());
+  },
 })
 
 // holds our top header bar, as well as our side bar (drawer), will also hold our feed container
@@ -89,7 +96,7 @@ const MainContainer = (props) => {
         <Typography variant="inherit" className={classes.loginContainer}>
           <p className={classes.email}>{ props.resources.isLoggedin ? props.resources.currentUser.email : null }</p>
           {props.resources.isLoggedin ? 
-          <Logout variant="contained" color="primary" className={classes.logoutButton}/> :
+          <Logout variant="contained" color="primary" className={classes.logoutButton} logout={props.logout} resources={props.getResources} topics={props.getTopics}/> :
           <Login variant="contained" color="primary" className={classes.loginButton} login={props.login}/>
           }
         </Typography>

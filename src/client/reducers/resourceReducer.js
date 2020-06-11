@@ -3,9 +3,9 @@ import * as types from '../constants/actionTypes';
 // Set initial state
 const initialState = {
   isLoggedin: false,
-  currentUser: {Name: 'Buma'},
-  favoriteResources: ['CS'],
-  favoriteTechs: ['Not Redux'],
+  currentUser: {},
+  favoriteResources: [],
+  favoriteTechs: [],
   resources: [
     {
       name: '',
@@ -61,18 +61,24 @@ const resourceReducer = (state = initialState, action) => {
         resources: action.payload,
       };
     case types.LOGIN:
-      return{
+      return {
         ...state,
         isLoggedin: true,
         currentUser: action.payload.currentUser,
-        favoriteResources: action.payload.favResources, 
+        favoriteResources: action.payload.favResources,
         favoriteTechs: action.payload.favoriteTechs
       }
-            
+    case types.LOGOUT:
+      return {
+        ...state,
+        isLoggedin: false,
+        currentUser: {},
+        favoriteResources: [],
+        favoriteTechs: []
+      }
     default:
       return state;
   }
-  //update state with login
 };
 
 export default resourceReducer;
