@@ -21,14 +21,36 @@ favoritesController.getFavTechs = (req, res, next) => {
 };
 
 // getFavResources for favorited resources for current logged in user
-favoritesController.getFavResources = (req, res, next) => {
+favoritesController.getFavIds = (req, res, next) => {
   const { users_id } = res.locals.currentUser || res.locals;
-  console.log('favoritesController.getFavResources -> users_id', users_id);
+  console.log('favoritesController.getFavIds -> users_id', users_id);
   item = `SELECT r.resources_id FROM users u INNER JOIN favorite_resources fr ON u.users_id = fr.users_id INNER JOIN resources r ON fr.resources_id = r.resources_id WHERE u.users_id = $1;`;
   const values = [users_id];
   db.query(item, values)
     .then((query) => {
-      res.locals.favResources = query.rows.map((obj) => obj.resources_id);
+      res.locals.favIds = query.rows.map((obj) => obj.resources_id);
+      return next();
+    })
+    .catch((err) =>
+      next({
+        log: 'ERROR in userControllers.getFavIds',
+        message: { err: `ERROR in userControllers.getFavIds ${err}` },
+      })
+    );
+};
+
+favoritesController.getFavResources = (req, res, next) => {
+  const { users_id } = res.locals;
+  console.log('favoritesController.getFavResources -> users_id', users_id);
+  item = `SELECT r.resources_id, r.name, r.description, r.url, r.likes, r.tech_id, t.tech 
+  FROM users u INNER JOIN favorite_resources fr ON u.users_id = fr.users_id 
+  INNER JOIN resources r ON fr.resources_id = r.resources_id 
+  INNER JOIN techs t ON r.tech_id = t.techs_id
+  WHERE u.users_id = $1;`;
+  const values = [users_id];
+  db.query(item, values)
+    .then((query) => {
+      res.locals.favResources = query.rows;
       return next();
     })
     .catch((err) =>
@@ -48,15 +70,15 @@ favoritesController.checkFavResource = (req, res, next) => {
   db.query(item, values)
     .then((query) => {
       if (!query.rows[0]) {
-        console.log('successful check fav resource')
+        console.log('successful check fav resource');
         return next();
       } else {
-        console.log('FAIL inside check fav resource')
+        console.log('FAIL inside check fav resource');
         return res.status(400).send('Resource is already favorited!');
       }
     })
     .catch((err) => {
-      console.log('FAIL inside check fav resource')
+      console.log('FAIL inside check fav resource');
       return next({
         log: 'ERROR in userControllers.checkFavResource',
         message: { err: `ERROR in userControllers.checkFavResource ${err}` },
