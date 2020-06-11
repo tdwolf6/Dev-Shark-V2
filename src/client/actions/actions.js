@@ -167,9 +167,10 @@ export const addTopic = (name) => {
       .post('/tech', {tech: name})
       .then((response) => {
         console.log(response, '<------------- RESPONSE IN GET TECH')
+        console.log(response.data, '<------------- RESPONSE IN GET TECH')
         dispatch({
           type: types.ADD_FAV,
-          payload: response.data.name
+          payload: response.data
         });
       });
   };
