@@ -34,9 +34,11 @@ userController.validateToken = (req, res, next) => {
   // check incoming cookie and validate token before showing user-specific area
   console.log('Inside validateToken');
   const token = req.cookies.jwt;
-  const decoded = jwt.verify(token, process.env.JWT_SECRET);
-  // if decoded exists, jwt verification passed, pass users_id into locals and move onto next middleware
-  if (decoded) {
+  console.log('token is', token);
+  // if token exists, and jwt verification passed, pass users_id into locals and move onto next middleware
+  if (token) {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log('decoded is ', decoded);
     item = `SELECT users_id FROM users WHERE email = $1;`;
     const values = [decoded];
     db.query(item, values).then((query) => {
@@ -45,11 +47,10 @@ userController.validateToken = (req, res, next) => {
       console.log('validate token success, moving on');
       return next();
     });
-  } else {
-    console.log('validate token fail');
-    // figure out logic for what to do in front end. WHEN do they need to verify jwt, and what happens if it fails?
-    return res.status(400).send('jwt verify failed');
   }
+  console.log('validate token fail');
+  // figure out logic for what to do in front end. WHEN do they need to verify jwt, and what happens if it fails?
+  return next();
 };
 
 module.exports = userController;

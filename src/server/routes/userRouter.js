@@ -10,10 +10,11 @@ router.get(
   userController.validateToken,
   favoritesController.getFavIds,
   (req, res) => {
+    console.log('res.locals in /user get is', res.locals);
     return res.status(200).json({
       user_id: res.locals.users_id,
       favResources: res.locals.favIds,
-      email: res.locals.email
+      email: res.locals.email,
     });
   }
 );
@@ -51,7 +52,10 @@ router.delete(
   favoritesController.getFavResources,
   favoritesController.getFavIds,
   (req, res) => {
-    return res.status(200).json({ favoriteResources: res.locals.favIds, resources: res.locals.favResources });
+    return res.status(200).json({
+      favoriteResources: res.locals.favIds,
+      resources: res.locals.favResources,
+    });
   }
 );
 
@@ -65,26 +69,44 @@ router.get(
   }
 );
 
-// Add a like and return the new list of resources
+// Upvote a resource and return the new list of resources
 router.put(
   '/upvote',
   userController.validateToken,
-  voteController.updateUpvote,
-  resourceController.addLike,
-  resourceController.subtractLike,
+  voteController.addLike,
   resourceController.getResources,
   (req, res) => {
     return res.status(200).json(res.locals.resources);
   }
 );
 
-// Subtract a like and return the new list of resources
+// Remove upvote on a resource and return the new list of resources
+router.put(
+  '/removeUpvote',
+  userController.validateToken,
+  voteController.subtractLike,
+  resourceController.getResources,
+  (req, res) => {
+    return res.status(200).json(res.locals.resources);
+  }
+);
+
+// Downvote a resource and return the new list of resources
 router.put(
   '/downvote',
   userController.validateToken,
-  voteController.updateDownvote,
-  resourceController.addLike,
-  resourceController.subtractLike,
+  voteController.subtractLike,
+  resourceController.getResources,
+  (req, res) => {
+    return res.status(200).json(res.locals.resources);
+  }
+);
+
+// Remove downvote on a resource and return the new list of resources
+router.put(
+  '/removedownvote',
+  userController.validateToken,
+  voteController.addLike,
   resourceController.getResources,
   (req, res) => {
     return res.status(200).json(res.locals.resources);
