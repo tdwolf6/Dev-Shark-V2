@@ -10,10 +10,11 @@ router.get(
   userController.validateToken,
   favoritesController.getFavIds,
   (req, res) => {
+    console.log('res.locals in /user get is', res.locals);
     return res.status(200).json({
       user_id: res.locals.users_id,
       favResources: res.locals.favIds,
-      email: res.locals.email
+      email: res.locals.email,
     });
   }
 );
@@ -72,7 +73,7 @@ router.get(
 router.put(
   '/upvote',
   userController.validateToken,
-  resourceController.addLike,
+  voteController.addLike,
   resourceController.getResources,
   (req, res) => {
     return res.status(200).json(res.locals.resources);
@@ -83,7 +84,7 @@ router.put(
 router.put(
   '/removeUpvote',
   userController.validateToken,
-  resourceController.subtractLike,
+  voteController.subtractLike,
   resourceController.getResources,
   (req, res) => {
     return res.status(200).json(res.locals.resources);
@@ -94,7 +95,7 @@ router.put(
 router.put(
   '/downvote',
   userController.validateToken,
-  resourceController.subtractLike,
+  voteController.subtractLike,
   resourceController.getResources,
   (req, res) => {
     return res.status(200).json(res.locals.resources);
@@ -105,7 +106,7 @@ router.put(
 router.put(
   '/removedownvote',
   userController.validateToken,
-  resourceController.addLike,
+  voteController.addLike,
   resourceController.getResources,
   (req, res) => {
     return res.status(200).json(res.locals.resources);
