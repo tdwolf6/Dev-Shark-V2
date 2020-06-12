@@ -121,6 +121,7 @@ export const addFav = (resource_id) => {
     axios
       .post('/user/favorite', {resources_id: resource_id})
       .then((response) => {
+        console.log('add fav --------->', response )
         dispatch({
           type: types.ADD_FAV,
           payload: response.data.favoriteResources
